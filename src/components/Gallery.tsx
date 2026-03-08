@@ -2,53 +2,38 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-import takeaway from "@/assets/gallery/takeaway-platter.jpg";
-import starters from "@/assets/gallery/crispy-starters.jpg";
-import biryani from "@/assets/gallery/biryani.jpg";
-import restaurantArt from "@/assets/gallery/restaurant-art.jpg";
-import solkadi from "@/assets/gallery/solkadi-drink.jpg";
-import thali from "@/assets/gallery/thali.jpg";
-import stuffFish from "@/assets/gallery/stuff-fish.jpg";
-import biryaniRaita from "@/assets/gallery/biryani-raita.jpg";
-import bombilLeaf from "@/assets/gallery/bombil-leaf.webp";
-import aboutUsInterior from "@/assets/gallery/about-us-interior.png";
-import rawasThali from "@/assets/gallery/rawas-thali.png";
-import thaliSilver from "@/assets/gallery/thali-silver.png";
-import pomfretThali from "@/assets/gallery/pomfret-thali.png";
-import tisrayaThali from "@/assets/gallery/tisraya-thali.png";
-import surmaiThali from "@/assets/gallery/surmai-thali.png";
 import diningExperience from "@/assets/gallery/dining-experience.png";
-import fishThaliPresentation from "@/assets/gallery/fish-thali-presentation.png";
-import wallArtTurban from "@/assets/gallery/wall-art-turban.png";
-import samosasBananaLeaf from "@/assets/gallery/samosas-banana-leaf.png";
-import chickenLollipops from "@/assets/gallery/chicken-lollipops.png";
 import restaurantBanner from "@/assets/gallery/restaurant-banner.png";
-import friedFishPuris from "@/assets/gallery/fried-fish-puris.png";
+import wallArtTurban from "@/assets/gallery/wall-art-turban.png";
+import gallery2 from "@/assets/gallery/gallery2.webp";
+import gallery3 from "@/assets/gallery/gallery3.webp";
+import gallery5 from "@/assets/gallery/gallery5.jpg";
+import gallery7BatateCheKappa from "@/assets/gallery/gallery7-batate-che-kappa.webp";
+import gallery9 from "@/assets/gallery/gallery9.jpg";
+import new1 from "@/assets/gallery/new-1.jpg";
+import new2 from "@/assets/gallery/new-2.jpg";
+import new4 from "@/assets/gallery/new-4.webp";
+import new5 from "@/assets/gallery/new-5.jpg";
+import new6 from "@/assets/gallery/new-6.jpg";
+import new7 from "@/assets/gallery/new-7.webp";
+import new8 from "@/assets/gallery/new-8.webp";
 
-const galleryItems = [
-  { src: bombilLeaf, title: "Bombil Fry on Banana Leaf", caption: "केळीच्या पानावर बोंबील" },
-  { src: thali, title: "Traditional Maharashtrian Thali", caption: "मराठमोळी थाळी" },
-  { src: biryani, title: "Kolambi Bhat", caption: "कोळंबी भात" },
-  { src: stuffFish, title: "Stuff Surmai", caption: "स्टफ सुरमई" },
-  { src: starters, title: "Crispy Fish Cutlets", caption: "कुरकुरीत फिश कटलेट" },
-  { src: takeaway, title: "Party Pack Takeaway", caption: "पार्टी पॅक" },
-  { src: restaurantArt, title: "Our Vibrant Ambiance", caption: "आमचं वातावरण" },
-  { src: solkadi, title: "Sol Kadi & Vibes", caption: "सोलकढी" },
-  { src: biryaniRaita, title: "Chicken Biryani with Raita", caption: "चिकन बिर्याणी" },
-  // New images from your uploads
-  { src: aboutUsInterior, title: "Cozy Dining Corner", caption: "आमचं आवाजातलं वातावरण" },
-  { src: rawasThali, title: "Rawas Thali", caption: "रावस थाळी — Fish & Rice" },
-  { src: thaliSilver, title: "Silver Thali Spread", caption: "चांदीची थाळी" },
-  { src: pomfretThali, title: "Pomfret Thali", caption: "पापलेट थाळी" },
-  { src: tisrayaThali, title: "Tisraya Thali", caption: "तिसर्या थाळी — Clam Thali" },
-  { src: surmaiThali, title: "Surmai Thali", caption: "सुरमई थाळी" },
-  { src: diningExperience, title: "Dining at Masta Gajali", caption: "अस्सल अनुभव" },
-  { src: fishThaliPresentation, title: "Fresh Catch Presentation", caption: "ताजी मासे पक्की" },
-  { src: wallArtTurban, title: "Traditional Wall Art", caption: "पारंपारिक कला" },
-  { src: samosasBananaLeaf, title: "Samosas on Banana Leaf", caption: "केळीच्या पानावर समोसे" },
-  { src: chickenLollipops, title: "Chicken Lollipops", caption: "चिकन लॉलीपॉप" },
-  { src: restaurantBanner, title: "मस्ता गजाली — Our Space", caption: "आमची जागा" },
-  { src: friedFishPuris, title: "Fried Fish & Puris", caption: "तळलेली मासे आणि पुरी" },
+const galleryItems: { src: string; title: string; caption: string }[] = [
+  { src: restaurantBanner, title: "Masta Gajali", caption: "Welcome to our world of coastal flavors" },
+  { src: diningExperience, title: "Dining Experience", caption: "Warm ambience for family & friends" },
+  { src: wallArtTurban, title: "Wall Art", caption: "Culture-rich visual details" },
+  { src: gallery2, title: "Gallery 2", caption: "Fresh flavors and vibrant presentation" },
+  { src: gallery3, title: "Gallery 3", caption: "A delicious coastal spread" },
+  { src: gallery5, title: "Gallery 5", caption: "Authentic taste served with care" },
+  { src: gallery7BatateCheKappa, title: "Batate Che Kappa", caption: "A classic Konkan favorite" },
+  { src: gallery9, title: "Gallery 9", caption: "Memorable bites and moments" },
+  { src: new1, title: "New Highlight 1", caption: "Freshly added gallery moment" },
+  { src: new2, title: "New Highlight 2", caption: "Another beautiful plate from Masta Gajali" },
+  { src: new4, title: "New Highlight 4", caption: "Signature flavors in every frame" },
+  { src: new5, title: "New Highlight 5", caption: "Freshly added gallery moment" },
+  { src: new6, title: "New Highlight 6", caption: "Another new gallery highlight" },
+  { src: new7, title: "New Highlight 7", caption: "Freshly added gallery moment" },
+  { src: new8, title: "New Highlight 8", caption: "Another new gallery highlight" },
 ];
 
 interface GalleryProps {
@@ -141,8 +126,9 @@ const Gallery = ({ standalone = false }: GalleryProps) => {
         )}
 
         {/* Masonry-style grid with enhanced animations */}
-        <div className="columns-2 md:columns-3 gap-4 space-y-4">
-          {galleryItems.map((item, i) => (
+        {galleryItems.length > 0 ? (
+          <div className="columns-2 md:columns-3 gap-4 space-y-4">
+            {galleryItems.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.85, y: 30, rotate: -3 }}
@@ -235,8 +221,13 @@ const Gallery = ({ standalone = false }: GalleryProps) => {
                 </svg>
               </motion.div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10">
+            <p className="font-body text-muted-foreground">No gallery images available right now.</p>
+          </div>
+        )}
       </div>
 
       {/* Lightbox with slide + scale animations */}

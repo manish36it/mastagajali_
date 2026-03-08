@@ -14,6 +14,25 @@ type ChatMessage = {
   quickReplies?: QuickPrompt[];
 };
 
+const vegThaliLines = [
+  "Special Veg Thali (₹290)",
+  "Veg Thali (₹195)",
+];
+
+const nonVegThaliLines = [
+  "Chicken Bhakri Thali (₹415)",
+  "Chicken Vada Thali (₹490)",
+  "Mutton Bhakri Thali (₹625)",
+  "Egg Thali (₹270)",
+  "Tisarya Thali (₹385)",
+  "Surmai Thali (₹550)",
+  "Prawns Thali (₹450)",
+  "Rawas Thali (₹485)",
+  "Pomfret Thali (₹680)",
+  "Crab Thali (₹625)",
+  "Bombil Thali (₹345)",
+];
+
 const initialMessages: ChatMessage[] = [
   {
     from: "bot",
@@ -59,17 +78,15 @@ const GajaliGuruBot = () => {
       return "hindi";
     }
 
-    const text = raw.toLowerCase();
-    if (text.includes("kya") || text.includes("khana") || text.includes("thali") || text.includes("samay")) {
-      return "hindi";
-    }
-
+    // For Roman text, always keep responses in English.
     return "english";
   };
 
   const getBotReply = (raw: string): string => {
     const text = raw.toLowerCase();
+    const normalizedText = text.replace(/[‑–—]/g, "-");
     const lang = getLanguage(raw);
+    const hasAny = (keywords: string[]) => keywords.some((k) => text.includes(k));
 
     const wrap = (mr: string, hi: string, en: string) => {
       if (lang === "marathi") return mr;
@@ -77,31 +94,73 @@ const GajaliGuruBot = () => {
       return en;
     };
 
-    if (text.includes("popular") || text.includes("best") || text.includes("recommend") || text.includes("famous")) {
+    const asksThali = hasAny(["thali", "थाली", "थाळी"]);
+    const asksBestOrPopular = hasAny(["best", "popular", "recommend", "famous", "best thali", "top thali"]);
+    const isNonVegThaliQuery =
+      /\b(non\s*-?\s*veg|seafood|fish)\s+thali\b/.test(normalizedText) ||
+      hasAny(["नॉन वेज", "नॉन-व्हेज", "नॉन‑व्हेज", "मासाहारी"]);
+    const isVegThaliQuery =
+      (/\b(veg|vegetarian)\s+thali\b/.test(normalizedText) ||
+        hasAny(["veg options", "veg option", "शाकाहारी", "वेज", "शाकाहारी थाली"])) &&
+      !isNonVegThaliQuery;
+
+    if (isNonVegThaliQuery) {
       return wrap(
-        "आपले सर्वात लोकप्रिय पदार्थ:\n- बॉम्बील फ्राय, क्रॅब मसाला, कोलंबी भात (Kolambi Bhat)\n- कोम्बडी वडे, मटण भाकरी थाळी\n- सोलकढी आणि मसाला छास – भारी कॉम्बो! 😋",
-        "हमारे सबसे मशहूर डिश:\n- बॉम्बिल फ्राई, क्रैब मसाला, कोलंबी भात (झींगा राइस)\n- कोम्बडी वड़े और मटन भाकरी थाली\n- सोलकड़ी और मसाला छास – परफेक्ट कॉम्बो! 😋",
-        "Our most loved dishes:\n- Bombil Fry, Crab Masala, Kolambi Bhat (Prawns Rice)\n- Kombdi Vade & Mutton Bhakri Thali\n- Solkadi and Masala Chaas to cool everything down. 😋"
+        `नॉन‑व्हेज थाळीचे अचूक पर्याय:\n- ${nonVegThaliLines.join("\n- ")}\nपहिल्यांदा येत असाल तर Surmai / Prawns / Crab थाळी छान choice आहे.`,
+        `नॉन‑वेज थाली के सही विकल्प:\n- ${nonVegThaliLines.join("\n- ")}\nपहली बार आ रहे हों तो Surmai / Prawns / Crab थाली बढ़िया choice है।`,
+        `Accurate non-veg thali options:\n- ${nonVegThaliLines.join("\n- ")}\nIf it’s your first visit, Surmai / Prawns / Crab thali is a great pick.`
       );
     }
 
-    if (text.includes("thali")) {
+    if (isVegThaliQuery) {
       return wrap(
-        "थाळीसाठी सुचवणी:\n- नॉन‑व्हेज: सुरमई, प्रॉन्स, रावस, क्रॅब, कोम्बडी वडे, मटण भाकरी थाळी\n- व्हेज: स्पेशल व्हेज थाळी आणि रेग्युलर व्हेज थाळी\nफ्रेश फिशसाठी येताना आजचा कॅच नक्की विचारा!",
-        "थाली के लिए सजेशन:\n- नॉन‑वेज: सुरमई, प्रॉन्स, रावस, क्रैब, कोम्बडी वड़े, मटन भाकरी थाली\n- वेज: स्पेशल वेज थाली और रेग्युलर वेज थाली\nफ्रेश फिश के लिए आज का ‘कैच ऑफ द डे’ ज़रूर पूछिए।",
-        "Thali recommendations:\n- Non‑veg: Surmai, Prawns, Rawas, Crab, Kombdi Vade, Mutton Bhakri Thali\n- Veg: Special Veg Thali & Veg Thali\nAsk for today’s fresh catch when you visit!"
+        `व्हेज थाळीसाठी अचूक पर्याय:\n- ${vegThaliLines.join("\n- ")}\nसोबत Dal Fry / Dal Tadka + Solkadi छान कॉम्बो होतो.`,
+        `वेज थाली के सही विकल्प:\n- ${vegThaliLines.join("\n- ")}\nसाथ में Dal Fry / Dal Tadka + Solkadi अच्छा कॉम्बो बनता है।`,
+        `Accurate veg thali options:\n- ${vegThaliLines.join("\n- ")}\nPair with Dal Fry / Dal Tadka + Solkadi for a complete meal.`
       );
     }
 
-    if (text.includes("special") || text.includes("today")) {
+    if (hasAny(["thali price", "price range", "thali rate", "thali cost", "थाली कीमत", "थाळी किंमत"])) {
       return wrap(
-        "आजचे स्पेशल बहुतेक वेळा – वरण भात साजूक तूप, स्टफ क्रॅब, कोम्बडी वडे आणि सीझनल फिश.\nमेनूतील “Today’s Special” आणि “Special Thali” सेक्शन नक्की बघा.",
-        "आज के स्पेशल में अक्सर – वरण–भात साजूक घी के साथ, स्टफ्ड क्रैब, कोम्बडी वड़े और सीज़नल फिश रहती है।\nमे뉴 में “Today’s Special” और “Special Thali” सेक्शन देखिए।",
-        "Today’s specials often include Varan Bhaat Sajuk Tuup, Stuffed Crab, Kombdi Vade and seasonal fish.\nCheck the ‘Today’s Special’ and ‘Special Thali’ sections on the Menu page for full details."
+        "थाळी किंमत रेंज ₹195 ते ₹680 आहे (Special Thali सेक्शन).\n- Veg Thali ₹195\n- Special Veg Thali ₹290\n- Bombil Thali ₹345\n- Pomfret Thali ₹680\nNote: Masta Gajali Special Non Veg Thali ₹1,595 (Today’s Special).",
+        "थाली कीमत ₹195 से ₹680 है (Special Thali सेक्शन)।\n- Veg Thali ₹195\n- Special Veg Thali ₹290\n- Bombil Thali ₹345\n- Pomfret Thali ₹680\nNote: Masta Gajali Special Non Veg Thali ₹1,595 (Today’s Special)।",
+        "Thali prices are ₹195 to ₹680 in the Special Thali section.\n- Veg Thali ₹195\n- Special Veg Thali ₹290\n- Bombil Thali ₹345\n- Pomfret Thali ₹680\nNote: Masta Gajali Special Non Veg Thali is ₹1,595 (Today’s Special section)."
       );
     }
 
-    if (text.includes("time") || text.includes("open") || text.includes("hours") || text.includes("timing")) {
+    if (asksThali && asksBestOrPopular) {
+      return wrap(
+        "थाळीसाठी best sellers:\n- Surmai Thali (₹550)\n- Prawns Thali (₹450)\n- Crab Thali (₹625)\n- Mutton Bhakri Thali (₹625)\n- Special Veg Thali (₹290)\nतुम्हाला व्हेज की नॉन‑व्हेज recommendation हवी ते सांगा, मी एक best pick देतो.",
+        "थाली में best sellers:\n- Surmai Thali (₹550)\n- Prawns Thali (₹450)\n- Crab Thali (₹625)\n- Mutton Bhakri Thali (₹625)\n- Special Veg Thali (₹290)\nआप वेज या नॉन‑वेज बताइए, मैं एक best pick बताता हूँ।",
+        "Best-selling thali picks:\n- Surmai Thali (₹550)\n- Prawns Thali (₹450)\n- Crab Thali (₹625)\n- Mutton Bhakri Thali (₹625)\n- Special Veg Thali (₹290)\nTell me veg or non-veg and I’ll suggest one best pick for you."
+      );
+    }
+
+    if (hasAny(["popular", "best", "recommend", "famous"])) {
+      return wrap(
+        "आपले लोकप्रिय पदार्थ:\n- Bombil Fry, Prawns Fry, Crab Lollipop\n- Crab Masala, Kolambi Bhat, Chicken Biryani\n- Kombdi Vade, Mutton Bhakri Thali, Surmai Thali\n- Solkadi आणि Masala Chaas",
+        "हमारे लोकप्रिय डिश:\n- Bombil Fry, Prawns Fry, Crab Lollipop\n- Crab Masala, Kolambi Bhat, Chicken Biryani\n- Kombdi Vade, Mutton Bhakri Thali, Surmai Thali\n- Solkadi और Masala Chaas",
+        "Our popular dishes:\n- Bombil Fry, Prawns Fry, Crab Lollipop\n- Crab Masala, Kolambi Bhat, Chicken Biryani\n- Kombdi Vade, Mutton Bhakri Thali, Surmai Thali\n- Solkadi and Masala Chaas"
+      );
+    }
+
+    if (asksThali) {
+      return wrap(
+        `थाळी पर्याय (अचूक मेनू):\nव्हेज:\n- ${vegThaliLines.join("\n- ")}\nनॉन‑व्हेज:\n- ${nonVegThaliLines.join("\n- ")}`,
+        `थाली विकल्प (सही मेन्यू):\nवेज:\n- ${vegThaliLines.join("\n- ")}\nनॉन‑वेज:\n- ${nonVegThaliLines.join("\n- ")}`,
+        `Thali options (accurate menu):\nVeg:\n- ${vegThaliLines.join("\n- ")}\nNon-veg:\n- ${nonVegThaliLines.join("\n- ")}`
+      );
+    }
+
+    if (hasAny(["special", "today", "आज", "aaj", "todays"])) {
+      return wrap(
+        "आजचे स्पेशल (मेनूनुसार):\n- Varan Bhaat Sajuk Tuup (₹170)\n- Kombdi Vade (₹290)\n- Amras Puri (₹310)\n- Stuff Crab (₹390)\n- Stuff Bombil (₹295)\n- Masta Gajali Special Non Veg Thali (₹1,595)",
+        "आज के स्पेशल (मेन्यू के अनुसार):\n- Varan Bhaat Sajuk Tuup (₹170)\n- Kombdi Vade (₹290)\n- Amras Puri (₹310)\n- Stuff Crab (₹390)\n- Stuff Bombil (₹295)\n- Masta Gajali Special Non Veg Thali (₹1,595)",
+        "Today’s specials (as per menu):\n- Varan Bhaat Sajuk Tuup (₹170)\n- Kombdi Vade (₹290)\n- Amras Puri (₹310)\n- Stuff Crab (₹390)\n- Stuff Bombil (₹295)\n- Masta Gajali Special Non Veg Thali (₹1,595)"
+      );
+    }
+
+    if (hasAny(["time", "open", "hours", "timing", "samay", "कितने बजे", "वेळ", "timings"])) {
       return wrap(
         "आमचे वेळः दररोज 12–4 pm आणि 7–11:30 pm.",
         "हमारा टाइमिंग: रोज 12–4 pm और 7–11:30 pm खुला रहता है।",
@@ -109,15 +168,15 @@ const GajaliGuruBot = () => {
       );
     }
 
-    if (text.includes("where") || text.includes("address") || text.includes("location") || text.includes("direction")) {
+    if (hasAny(["where", "address", "location", "direction", "map", "kidhar", "कहाँ", "पता", "kuthe", "कुठे"])) {
       return wrap(
-        "आमचा पत्ता:\nShop No.1, Galaxy co‑op hsg ltd,\nRambhau Bhogle Marg, Ghodapdeo,\nMazgaon, Mumbai 400010.\n‘Visit Us’ सेक्शनमधील नकाशा बघा.",
-        "हमारा पता:\nShop No.1, Galaxy co‑op hsg ltd,\nRambhau Bhogle Marg, Ghodapdeo,\nMazgaon, Mumbai 400010.\nसाइट पर ‘Visit Us’ में मैप भी है।",
-        "We are at:\nShop No.1, Galaxy co‑op hsg ltd,\nRambhau Bhogle Marg, Ghodapdeo,\nMazgaon, Mumbai, Maharashtra 400010.\nTap ‘Visit Us’ on the site to see the live map."
+        "आमचा पत्ता:\nShop No. 1, 2, & 3, Malim House, Galaxy CHSL,\nRambhau Bhogle Marg, Mazgaon, Mumbai - 400033.\n‘Visit Us’ सेक्शनमध्ये नकाशा आहे.",
+        "हमारा पता:\nShop No. 1, 2, & 3, Malim House, Galaxy CHSL,\nRambhau Bhogle Marg, Mazgaon, Mumbai - 400033.\n‘Visit Us’ सेक्शन में मैप उपलब्ध है।",
+        "We are at:\nShop No. 1, 2, & 3, Malim House, Galaxy CHSL,\nRambhau Bhogle Marg, Mazgaon, Mumbai - 400033.\nSee the live map in the ‘Visit Us’ section."
       );
     }
 
-    if (text.includes("price") || text.includes("cost") || text.includes("per person") || text.includes("budget")) {
+    if (hasAny(["price", "cost", "per person", "budget", "kitna", "कितना", "किंमत", "rate"])) {
       return wrap(
         "बेसिक बजेट साधारण ₹400–600 प्रति व्यक्ती (थाळी आणि फिशनुसार बदलू शकते).",
         "औसत खर्च लगभग ₹400–600 प्रति व्यक्ति होता है (थाली और फिश के हिसाब से बदल सकता है)।",
@@ -143,7 +202,7 @@ const GajaliGuruBot = () => {
   const getFollowUpQuickReplies = (raw: string): QuickPrompt[] => {
     const text = raw.toLowerCase();
 
-    if (text.includes("thali")) {
+    if (text.includes("thali") || text.includes("थाली") || text.includes("थाळी")) {
       return [
         { label: "Non-veg thali", query: "Recommend best non veg thali" },
         { label: "Veg thali", query: "Recommend veg thali" },
@@ -201,14 +260,19 @@ const GajaliGuruBot = () => {
         type="button"
         aria-label="Open Gajali Guru chatbot"
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-4 md:right-6 z-40 rounded-full bg-gradient-to-r from-golden via-primary to-golden p-[2px] shadow-[0_18px_50px_rgba(0,0,0,0.65)]"
+        className="fixed bottom-6 right-4 md:right-6 z-40 rounded-full bg-gradient-to-r from-golden via-primary to-golden p-[2px] shadow-[0_20px_55px_rgba(0,0,0,0.7)]"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.5 }}
       >
-        <div className="flex items-center gap-2 rounded-full bg-[hsl(20,15%,8%)] px-3 py-1.5 md:px-4 md:py-2">
+        <div className="relative flex items-center gap-2 rounded-full bg-[hsl(20,15%,8%)] px-3 py-1.5 md:px-4 md:py-2 overflow-hidden">
           <motion.div
-            className="relative h-8 w-8 rounded-full border border-golden/60 bg-black/40 overflow-hidden"
+            className="absolute inset-0 bg-gradient-to-r from-golden/0 via-golden/20 to-golden/0"
+            animate={{ x: ["-120%", "120%"] }}
+            transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.5, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="relative h-8 w-8 rounded-full border border-golden/60 bg-black/40 overflow-hidden shadow-[0_0_18px_hsl(var(--golden)/0.45)]"
             animate={{ rotate: [-4, 4, -4] }}
             transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1 }}
           >
@@ -234,15 +298,16 @@ const GajaliGuruBot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.96 }}
             transition={{ type: "spring", damping: 18 }}
-            className="fixed bottom-4 right-2 md:right-6 z-40 w-[min(360px,90vw)]"
+            className="fixed bottom-4 right-2 md:right-6 z-40 w-[min(380px,92vw)]"
           >
-            <div className="rounded-3xl border border-golden/35 bg-[hsl(20,15%,6%/0.98)] backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col max-h-[70vh]">
+            <div className="relative rounded-3xl border border-golden/35 bg-[hsl(20,15%,6%/0.98)] backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col max-h-[72vh]">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0_0,hsl(38_85%_55%_/_0.14),transparent_38%),radial-gradient(circle_at_100%_100%,hsl(10_80%_55%_/_0.12),transparent_42%)]" />
               {/* Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-golden/25 bg-gradient-to-r from-[hsl(20,15%,10%)] via-[hsl(20,15%,8%)] to-[hsl(20,15%,10%)]">
+              <div className="relative z-10 flex items-center justify-between px-4 py-3 border-b border-golden/25 bg-gradient-to-r from-[hsl(20,15%,10%)] via-[hsl(20,15%,8%)] to-[hsl(20,15%,10%)]">
                 <div className="flex items-center gap-2">
                   <div className="relative">
                     <motion.div
-                      className="h-8 w-8 rounded-full border border-golden/60 bg-black/40 overflow-hidden"
+                      className="h-8 w-8 rounded-full border border-golden/60 bg-black/40 overflow-hidden shadow-[0_0_16px_hsl(var(--golden)/0.4)]"
                       animate={{ rotate: [-5, 5, -5] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     >
@@ -273,7 +338,7 @@ const GajaliGuruBot = () => {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-full p-1.5 hover:bg-golden/15 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+                  className="rounded-full p-1.5 hover:bg-golden/15 text-primary-foreground/70 hover:text-primary-foreground transition-colors border border-transparent hover:border-golden/35"
                   aria-label="Close chat"
                 >
                   <X className="h-4 w-4" />
@@ -281,14 +346,14 @@ const GajaliGuruBot = () => {
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 bg-[radial-gradient(circle_at_0_0,hsl(38_85%_40%_/_0.15),transparent_55%),radial-gradient(circle_at_100%_0,hsl(10_80%_55%_/_0.12),transparent_55%)]">
+              <div className="relative z-10 flex-1 overflow-y-auto px-3 py-3 space-y-2 bg-[radial-gradient(circle_at_0_0,hsl(38_85%_40%_/_0.15),transparent_55%),radial-gradient(circle_at_100%_0,hsl(10_80%_55%_/_0.12),transparent_55%)]">
                 <div className="mb-2 flex flex-wrap gap-1.5">
                   {quickCommandBar.map((item) => (
                     <button
                       key={item.label}
                       type="button"
                       onClick={() => handleUserMessage(item.query)}
-                      className="rounded-full border border-golden/35 bg-[hsl(20,15%,12%)] px-2.5 py-1 text-[10px] text-primary-foreground/85 hover:bg-golden/20 hover:border-golden/60 transition-colors"
+                      className="rounded-full border border-golden/35 bg-[linear-gradient(135deg,hsl(20,15%,14%),hsl(20,15%,10%))] px-2.5 py-1 text-[10px] text-primary-foreground/90 hover:bg-golden/20 hover:border-golden/60 transition-all hover:-translate-y-[1px]"
                     >
                       {item.label}
                     </button>
@@ -304,8 +369,8 @@ const GajaliGuruBot = () => {
                       <div
                         className={`rounded-2xl px-3 py-2 text-xs font-body leading-relaxed whitespace-pre-line ${
                         msg.from === "user"
-                          ? "bg-primary text-primary-foreground rounded-br-sm"
-                          : "bg-[hsl(20,15%,12%)] text-primary-foreground/90 rounded-bl-sm border border-golden/25"
+                          ? "bg-[linear-gradient(135deg,hsl(var(--primary)),hsl(var(--golden)))] text-[hsl(20,15%,8%)] rounded-br-sm shadow-[0_10px_24px_hsl(var(--primary)/0.35)]"
+                          : "bg-[hsl(20,15%,12%/0.92)] text-primary-foreground/90 rounded-bl-sm border border-golden/25 shadow-[0_8px_20px_rgba(0,0,0,0.28)]"
                       }`}
                       >
                         {msg.text}
@@ -318,7 +383,7 @@ const GajaliGuruBot = () => {
                               key={`${index}-${prompt.label}`}
                               type="button"
                               onClick={() => handleUserMessage(prompt.query)}
-                              className="rounded-full border border-golden/35 bg-[hsl(20,15%,10%)] px-2.5 py-1 text-[10px] text-golden/95 hover:bg-golden/15 transition-colors"
+                              className="rounded-full border border-golden/35 bg-[linear-gradient(135deg,hsl(20,15%,11%),hsl(20,15%,8%))] px-2.5 py-1 text-[10px] text-golden/95 hover:bg-golden/15 transition-all hover:-translate-y-[1px]"
                             >
                               {prompt.label}
                             </button>
@@ -331,7 +396,7 @@ const GajaliGuruBot = () => {
 
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="rounded-2xl rounded-bl-sm bg-[hsl(20,15%,12%)] border border-golden/25 px-3 py-2">
+                    <div className="rounded-2xl rounded-bl-sm bg-[hsl(20,15%,12%)] border border-golden/25 px-3 py-2 shadow-[0_8px_18px_rgba(0,0,0,0.28)]">
                       <div className="flex items-center gap-1">
                         <motion.span
                           className="h-1.5 w-1.5 rounded-full bg-golden"
@@ -358,7 +423,7 @@ const GajaliGuruBot = () => {
 
               {/* Input */}
               <form
-                className="flex items-center gap-2 px-3 py-2 border-t border-border/60 bg-[hsl(20,15%,8%)]"
+                className="relative z-10 flex items-center gap-2 px-3 py-2 border-t border-border/60 bg-[hsl(20,15%,8%)]"
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSend();
@@ -369,12 +434,12 @@ const GajaliGuruBot = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask Gajali Guru about thalis, specials..."
-                  className="flex-1 rounded-full bg-[hsl(20,15%,4%)] border border-border/60 px-3 py-2 text-xs font-body text-primary-foreground placeholder:text-primary-foreground/40 focus:outline-none focus:ring-1 focus:ring-golden/60"
+                  className="flex-1 rounded-full bg-[hsl(20,15%,4%)] border border-golden/25 px-3 py-2 text-xs font-body text-primary-foreground placeholder:text-primary-foreground/40 focus:outline-none focus:ring-1 focus:ring-golden/60 focus:border-golden/60"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim()}
-                  className="inline-flex items-center justify-center rounded-full bg-golden text-accent-foreground p-2 hover:bg-golden/90 transition-colors"
+                  className="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,hsl(var(--golden)),hsl(var(--primary)))] text-[hsl(20,15%,8%)] p-2 hover:brightness-110 transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
                 >
                   <Send className="h-3.5 w-3.5" />
                 </button>

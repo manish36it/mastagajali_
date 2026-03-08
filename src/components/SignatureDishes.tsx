@@ -1,26 +1,69 @@
 import { motion } from "framer-motion";
-import bombilFry from "@/assets/bombil-fry.jpg";
-import crabLollipop from "@/assets/crab-lollipop.jpg";
-import prawns from "@/assets/prawns.jpg";
+import { Link } from "react-router-dom";
+import specialNonVegThali from "@/assets/special-non-veg-thali.png";
+import pomfretFry from "@/assets/pomfret-fry.webp";
+import prawnsFry from "@/assets/prawns-fry.webp";
+import crabThali from "@/assets/crab-thali.webp";
+import stuffedCrab from "@/assets/stuffed-crab.jpg";
+import makhlaFry from "@/assets/makhla-fry.webp";
+import paneerChilliFry from "@/assets/paneer-chilli-fry.webp";
+import muttonBhakariThali from "@/assets/mutton-bhakari-thali.jpg";
+import vegThali from "@/assets/veg-thali.jpg";
 
 const dishes = [
   {
-    name: "Bombil Fry",
-    description: "Golden-crisp Bombay duck, marinated in coastal spices and fried to perfection. A Mumbai legend.",
-    price: "₹280",
-    image: bombilFry,
-  },
-  {
-    name: "Crab Lollipop",
-    description: "Succulent crab claws coated in a spiced crust, served with tangy dipping sauce. Pure indulgence.",
-    price: "₹350",
-    image: crabLollipop,
-  },
-  {
-    name: "Jumbo Prawns",
-    description: "Fresh, juicy prawns tossed in aromatic masala with a squeeze of lime. Ocean on a plate.",
+    name: "Special Non Veg Thali",
+    description: "A full coastal thali loaded with fish, curries, sides, and authentic Konkan flavors.",
     price: "₹420",
-    image: prawns,
+    image: specialNonVegThali,
+  },
+  {
+    name: "Pomfret Fry",
+    description: "Fresh pomfret marinated in traditional masala and fried crisp for a rich seafood bite.",
+    price: "₹350",
+    image: pomfretFry,
+  },
+  {
+    name: "Prawns Fry",
+    description: "Juicy prawns tossed in bold spices and pan-fried for a fiery and flavorful experience.",
+    price: "₹420",
+    image: prawnsFry,
+  },
+  {
+    name: "Crab Thali",
+    description: "A seafood lover’s complete meal featuring crab preparations served with rice and sides.",
+    price: "₹450",
+    image: crabThali,
+  },
+  {
+    name: "Stuffed Crab",
+    description: "Crab meat packed with coastal masala, stuffed and cooked for a rich, spicy seafood delight.",
+    price: "₹585",
+    image: stuffedCrab,
+  },
+  {
+    name: "Makhla Fry",
+    description: "Coastal-style makhla fry, marinated and cooked to bring out its signature smoky flavor.",
+    price: "₹320",
+    image: makhlaFry,
+  },
+  {
+    name: "Paneer Chilli Fry",
+    description: "Soft paneer cubes stir-fried with chillies, onion, and spices in Indo-coastal style.",
+    price: "₹280",
+    image: paneerChilliFry,
+  },
+  {
+    name: "Mutton Bhakari Thali",
+    description: "Traditional mutton thali served with bhakari, rich gravy, and authentic coastal spices.",
+    price: "₹625.00",
+    image: muttonBhakariThali,
+  },
+  {
+    name: "Veg Thali",
+    description: "Classic vegetarian thali with sabzi, dal, rice, roti, and traditional sides.",
+    price: "₹195.00",
+    image: vegThali,
   },
 ];
 
@@ -43,7 +86,7 @@ const SignatureDishes = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {dishes.map((dish, i) => (
             <motion.div
               key={dish.name}
@@ -61,17 +104,16 @@ const SignatureDishes = () => {
                 />
               </div>
               <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2">
                   <h3 className="font-display text-xl font-bold text-foreground">{dish.name}</h3>
-                  <span className="font-display text-lg font-semibold text-primary">{dish.price}</span>
                 </div>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">{dish.description}</p>
-                <a
-                  href="/menu"
+                <Link
+                  to="/menu"
                   className="inline-block mt-3 font-body text-xs font-semibold text-primary hover:text-golden transition-colors bg-primary/10 border border-primary/20 px-3 py-1 rounded-full"
                 >
                   See Full Menu →
-                </a>
+                </Link>
               </div>
             </motion.div>
           ))}

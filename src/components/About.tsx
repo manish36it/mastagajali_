@@ -1,4 +1,42 @@
 import { motion } from "framer-motion";
+import instagramLogo from "@/assets/logos/instagram.png";
+import facebookLogo from "@/assets/logos/facebook.png";
+import zomatoLogo from "@/assets/logos/zomato.png";
+import swiggyLogo from "@/assets/logos/swiggy.png";
+import justdialLogo from "@/assets/logos/justdial.png";
+
+const socialPlatforms = [
+  {
+    name: "Instagram",
+    handle: "@mastagajali07",
+    href: "https://www.instagram.com/mastagajali07/",
+    logo: instagramLogo,
+  },
+  {
+    name: "Facebook",
+    handle: "@snap2.0multicuisine",
+    href: "https://www.facebook.com/snap2.0multicuisine/",
+    logo: facebookLogo,
+  },
+  {
+    name: "Zomato",
+    handle: "Masta Gajali Mazgaon",
+    href: "https://www.zomato.com/mumbai/restaurants?q=Masta%20Gajali%20Mazgaon",
+    logo: zomatoLogo,
+  },
+  {
+    name: "Swiggy",
+    handle: "Masta Gajali Mazgaon",
+    href: "https://www.swiggy.com/search?query=Masta%20Gajali%20Mazgaon",
+    logo: swiggyLogo,
+  },
+  {
+    name: "Justdial",
+    handle: "Masta Gajali Mazgaon",
+    href: "https://www.justdial.com/Mumbai/Masta-Gajali-Mazgaon",
+    logo: justdialLogo,
+  },
+];
 
 const About = () => {
   return (
@@ -58,6 +96,44 @@ const About = () => {
                 </motion.div>
               ))}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="mt-12"
+            >
+              <p className="font-body text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-4">
+                Follow Us on Social Platforms
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                {socialPlatforms.map((platform, index) => (
+                  <motion.a
+                    key={platform.name}
+                    href={platform.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.15 + index * 0.06, duration: 0.4 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="rounded-xl glass-card card-hover-lift border border-golden/25 px-3 py-3 flex items-center gap-3 text-left"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-background/60 border border-border flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={platform.logo} alt={platform.name} className="w-6 h-6 object-contain" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-body text-xs text-muted-foreground">{platform.name}</p>
+                      <p className="font-body text-sm font-semibold text-foreground truncate">{platform.handle}</p>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

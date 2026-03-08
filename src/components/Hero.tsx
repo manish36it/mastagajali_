@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { Transition, TargetAndTransition } from "framer-motion";
-import { MapPin, ChevronDown } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroplatter from "@/assets/img.png";
 
 const fadeUp = (delay = 0): {
@@ -120,16 +121,19 @@ const Hero = () => {
             className="flex flex-wrap gap-3"
             {...fadeUp(0.72)}
           >
-            <motion.a
-              href="/menu"
+            <motion.div
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl
-                         bg-primary text-primary-foreground font-semibold text-sm
-                         shadow-lg hover:opacity-90 transition-opacity"
             >
-              🍽️ Explore Menu
-            </motion.a>
+              <Link
+                to="/menu"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl
+                           bg-primary text-primary-foreground font-semibold text-sm
+                           shadow-lg hover:opacity-90 transition-opacity"
+              >
+                🍽️ Explore Menu
+              </Link>
+            </motion.div>
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.04 }}
@@ -143,21 +147,6 @@ const Hero = () => {
             </motion.a>
           </motion.div>
 
-          {/* Scroll hint */}
-          <motion.div
-            className="mt-12 hidden md:flex items-center gap-2 text-white/30 text-xs"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-          >
-            <motion.div
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ChevronDown className="w-4 h-4" />
-            </motion.div>
-            Scroll to explore
-          </motion.div>
         </motion.div>
 
         {/* Right — Image */}
