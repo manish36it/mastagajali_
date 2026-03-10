@@ -35,8 +35,8 @@ const Navbar = () => {
   };
 
   const bg = scrolled || !isHome
-    ? "bg-[linear-gradient(135deg,hsl(205_62%_14%/.78),hsl(20_20%_10%/.72),hsl(205_62%_14%/.78))] backdrop-blur-xl shadow-[0_10px_36px_rgba(0,0,0,0.35)] border-b border-golden/30"
-    : "bg-black/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-0 border-b border-golden/25 md:border-b-0";
+    ? "bg-[linear-gradient(135deg,hsl(25_60%_12%/.95),hsl(28_55%_8%/.92),hsl(25_60%_12%/.95))] backdrop-blur-xl shadow-[0_10px_36px_rgba(0,0,0,0.45)] border-b border-amber-600/40"
+    : "bg-[linear-gradient(135deg,hsl(25_60%_12%/.85),hsl(28_55%_8%/.80),hsl(25_60%_12%/.85))] md:bg-transparent backdrop-blur-xl md:backdrop-blur-0 border-b border-amber-600/30 md:border-b-0";
   const showNavEffects = scrolled || !isHome;
 
   const textColor = "text-white";
