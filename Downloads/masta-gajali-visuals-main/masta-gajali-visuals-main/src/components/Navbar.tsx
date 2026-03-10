@@ -247,7 +247,7 @@ const Navbar = () => {
                       key={link.label}
                       to={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`font-body text-base py-3 px-4 rounded-lg transition-all block ${isLinkActive(link.href) ? "text-amber-400 bg-amber-500/20 border border-amber-500/40 font-semibold" : "text-amber-100 hover:text-amber-300 hover:bg-amber-500/10"}`}
+                      className={`font-body text-base py-3 px-4 rounded-lg transition-all block ${isLinkActive(link.href) ? "text-white bg-amber-500/20 border border-amber-500/40 font-semibold" : "text-white hover:text-amber-300 hover:bg-amber-500/10"}`}
                     >
                       {link.label}
                     </Link>
@@ -263,7 +263,7 @@ const Navbar = () => {
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
                       variants={mobileItemVariants}
-                      className="font-body text-base text-amber-100 py-3 px-4 rounded-lg hover:text-amber-300 hover:bg-amber-500/10 transition-all block"
+                      className="font-body text-base text-white py-3 px-4 rounded-lg hover:text-amber-300 hover:bg-amber-500/10 transition-all block"
                     >
                       {link.label}
                     </motion.a>
@@ -276,7 +276,7 @@ const Navbar = () => {
                     key={link.label}
                     to={hashTarget}
                     onClick={() => setMobileOpen(false)}
-                    className="font-body text-base text-amber-100 py-3 px-4 rounded-lg hover:text-amber-300 hover:bg-amber-500/10 transition-all block"
+                    className="font-body text-base text-white py-3 px-4 rounded-lg hover:text-amber-300 hover:bg-amber-500/10 transition-all block"
                   >
                     {link.label}
                   </Link>
@@ -291,7 +291,7 @@ const Navbar = () => {
                 <Link
                   to="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="block text-center px-5 py-3 rounded-full bg-[#1a120a] text-amber-100 font-body font-semibold text-sm"
+                  className="block text-center px-5 py-3 rounded-full bg-[#1a120a] text-white font-body font-semibold text-sm"
                 >
                   Order Now 🪔
                 </Link>
