@@ -3,7 +3,7 @@ import { MapPin, Phone, Clock } from "lucide-react";
 
 const Contact = () => {
   const mapQuery = encodeURIComponent(
-    "Masta Gajali, Shop No. 1, 2, & 3, Malim House, Galaxy CHSL, Rambhau Bhogle Marg, Mazgaon, Mumbai 400033"
+    "Masta Gajali, Shop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010"
   );
 
   return (
@@ -46,13 +46,9 @@ const Contact = () => {
                 <div>
                   <div className="font-semibold">Location</div>
                   <div className="text-primary-foreground/70 text-sm">
-                    Shop No. 1, 2, & 3, Malim House, Galaxy CHSL, Rambhau Bhogle Marg,
+                    Shop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo,
                     <br />
-                    Mazgaon, Mumbai - 400033
-                    <br />
-                    <span className="text-primary-foreground/55">
-                      Near Veermata Jijabai Bhosale Botanical Udyan (Byculla Zoo)
-                    </span>
+                    Mazgaon, Mumbai, Maharashtra 400010
                   </div>
                 </div>
               </div>

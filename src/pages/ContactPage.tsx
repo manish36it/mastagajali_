@@ -16,9 +16,8 @@ const ContactPage = () => {
   const location = useMemo(
     () => ({
       address:
-        "Shop No. 1, 2, & 3, Malim House, Galaxy CHSL, Rambhau Bhogle Marg, Mazgaon, Mumbai - 400033.",
-      landmark:
-        "Near the historic Veermata Jijabai Bhosale Botanical Udyan (Byculla Zoo).",
+        "Shop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010",
+      landmark: "",
       phoneDisplay: "022-23711623",
       phoneTel: "tel:02223711623",
       instagram: "https://www.instagram.com/mastagajali07/",
@@ -28,7 +27,7 @@ const ContactPage = () => {
   );
 
   const mapQuery = encodeURIComponent(
-    "Masta Gajali, Shop No. 1, 2, & 3, Malim House, Galaxy CHSL, Rambhau Bhogle Marg, Mazgaon, Mumbai 400033"
+    "Masta Gajali, Shop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010"
   );
   const mapsEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   const mapsDirectionsHref = `https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`;

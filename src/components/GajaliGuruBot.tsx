@@ -170,9 +170,9 @@ const GajaliGuruBot = () => {
 
     if (hasAny(["where", "address", "location", "direction", "map", "kidhar", "कहाँ", "पता", "kuthe", "कुठे"])) {
       return wrap(
-        "आमचा पत्ता:\nShop No. 1, 2, & 3, Malim House, Galaxy CHSL,\nRambhau Bhogle Marg, Mazgaon, Mumbai - 400033.\n‘Visit Us’ सेक्शनमध्ये नकाशा आहे.",
-        "हमारा पता:\nShop No. 1, 2, & 3, Malim House, Galaxy CHSL,\nRambhau Bhogle Marg, Mazgaon, Mumbai - 400033.\n‘Visit Us’ सेक्शन में मैप उपलब्ध है।",
-        "We are at:\nShop No. 1, 2, & 3, Malim House, Galaxy CHSL,\nRambhau Bhogle Marg, Mazgaon, Mumbai - 400033.\nSee the live map in the ‘Visit Us’ section."
+        "आमचा पत्ता:\nShop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010.\n'Visit Us' सेक्शनमध्ये नकाशा आहे.",
+        "हमारा पता:\nShop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010.\n'Visit Us' सेक्शन में मैप उपलब्ध है।",
+        "We are at:\nShop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010.\nSee the live map in the 'Visit Us' section."
       );
     }
 
