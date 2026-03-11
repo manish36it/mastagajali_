@@ -14,3 +14,15 @@
 [remote "updated"]
 	url = https://github.com/manish36it/MastaGajali_Updated.git
 	fetch = +refs/heads/*:refs/remotes/updated/*
+[remote "mastagajali"]
+	url = https://github.com/manish36it/mastagajali_.git
+	fetch = +refs/heads/*:refs/remotes/mastagajali/*
+[remote "new-mastagajali"]
+	url = https://github.com/manish36it/New_MastaGajali.git
+	fetch = +refs/heads/*:refs/remotes/new-mastagajali/*
+[remote "updated-repo"]
+	url = https://github.com/manish36it/MastaGajali_Updated.git
+	fetch = +refs/heads/*:refs/remotes/updated-repo/*
+[remote "new-origin"]
+	url = https://github.com/manish36it/New_MastaGajali.git
+	fetch = +refs/heads/*:refs/remotes/new-origin/*

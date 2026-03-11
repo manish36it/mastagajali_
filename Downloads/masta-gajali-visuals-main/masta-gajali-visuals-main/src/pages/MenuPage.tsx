@@ -105,7 +105,7 @@ const MenuPage = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              From the streets of Mazgaon to your plate — every dish tells a story of Mumbai's coastal soul.
+              A taste of Mazgaon's coastal heritage, served fresh on your plate.
             </motion.p>
 
             {/* Animated decorative dots */}

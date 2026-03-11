@@ -112,7 +112,7 @@ const Hero = () => {
             className="text-white/65 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
             {...fadeUp(0.55)}
           >
-            अस्सल मालवणी चवीचा खजिना — Veg &amp; Non-Veg, Tandoor &amp; Shawarma.
+            अस्सल मालवणी चवीचा खजिना — Veg & Non-Veg, Chinese.
             AC dining with live musical ambiance at Mazgaon, Mumbai.
           </motion.p>
 

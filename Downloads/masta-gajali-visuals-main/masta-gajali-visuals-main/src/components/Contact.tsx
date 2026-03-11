@@ -71,9 +71,9 @@ const Contact = () => {
                     Call:{" "}
                     <a
                       className="text-golden hover:text-golden/80 underline underline-offset-4"
-                      href="tel:02223711623"
+                      href="tel:8433762898"
                     >
-                      022-23711623
+                      8433762898
                     </a>
                     <span className="text-primary-foreground/40"> • </span>
                     Book via{" "}

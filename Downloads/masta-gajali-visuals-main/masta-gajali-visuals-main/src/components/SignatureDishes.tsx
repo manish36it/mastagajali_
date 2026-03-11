@@ -18,8 +18,8 @@ const dishes = [
     image: specialNonVegThali,
   },
   {
-    name: "Pomfret Fry",
-    description: "Fresh pomfret marinated in traditional masala and fried crisp for a rich seafood bite.",
+    name: "Surmai Fry",
+    description: "Fresh surmai marinated in traditional masala and fried crisp for a rich seafood bite.",
     price: "₹350",
     image: pomfretFry,
   },

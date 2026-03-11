@@ -18,8 +18,8 @@ const ContactPage = () => {
       address:
         "Shop No.1, Galaxy co-op hsg ltd, Rambhau Bhogle Marg, Ghodapdeo, Mazgaon, Mumbai, Maharashtra 400010",
       landmark: "",
-      phoneDisplay: "022-23711623",
-      phoneTel: "tel:02223711623",
+      phoneDisplay: "8433762898",
+      phoneTel: "tel:8433762898",
       instagram: "https://www.instagram.com/mastagajali07/",
       facebook: "https://www.facebook.com/snap2.0multicuisine/",
     }),
